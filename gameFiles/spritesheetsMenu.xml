@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<spritesheets>
+  <spritesheet name="minimalMessage">
+    <states>
+      <state name="displayText">
+        <layer name="background"></layer>
+        <layer name="text"></layer>
+      </state>
+    </states>
+    <layers>
+      <layer name="background" x="0" y="0">
+        <frame name="background"></frame>
+      </layer>
+      <layer name="text" x="0" y="0">
+        <frame name="text"></frame>
+      </layer>
+    </layers>
+    <frames>
+      <frame name="background" code="context.fillStyle='black';context.fillRect(0,0,1920,1080);"></frame>
+      <frame name="text" code="context.fillStyle='white';context.textAlign='center';context.font='40px Segoe UI';context.fillText(vars.$text,960,400);"></frame>
+    </frames>
+  </spritesheet>
+  <spritesheet name="blissBackground" src="images/menu/bliss.png">
+    <states>
+      <state name="background">
+        <layer name="background"></layer>
+      </state>
+    </states>
+    <layers>
+      <layer name="background" x="0" y="0">
+        <frame name="background"></frame>
+      </layer>
+    </layers>
+    <frames>
+      <frame name="background" x="0" y="0" w="1920" h="1080" t="200"></frame>
+    </frames>
+  </spritesheet>
+  <spritesheet name="acrylicBox">
+    <states>
+      <state name="intro">
+        <layer name="saveContext"></layer>
+        <layer name="introAnimation"></layer>
+        <layer name="inactive"></layer>
+        <layer name="icon"></layer>
+        <layer name="text"></layer>
+        <layer name="restoreContext"></layer>
+      </state>
+      <state name="fadingOut">
+        <layer name="saveContext"></layer>
+        <layer name="fadingOut"></layer>
+        <layer name="inactive"></layer>
+        <layer name="icon"></layer>
+        <layer name="text"></layer>
+        <layer name="restoreContext"></layer>
+      </state>
+      <state name="inactive">
+        <layer name="inactive"></layer>
+        <layer name="icon"></layer>
+        <layer name="text"></layer>
+      </state>
+      <state name="active">
+        <layer name="inactive"></layer>
+        <layer name="icon"></layer>
+        <layer name="text"></layer>
+        <layer name="active"></layer>
+      </state>
+      <state name="clicked">
+        <layer name="inactive"></layer>
+        <layer name="icon"></layer>
+        <layer name="text"></layer>
+        <layer name="clicked"></layer>
+      </state>
+    </states>
+    <layers>
+      <layer name="inactive" x="0" y="0">
+        <frame name="inactive"></frame>
+      </layer>
+      <layer name="active" x="0" y="0">
+        <frame name="active"></frame>
+      </layer>
+      <layer name="clicked" x="0" y="0">
+        <frame name="clicked"></frame>
+      </layer>
+      <layer name="icon" x="0" y="0">
+        <frame name="icon"></frame>
+      </layer>
+      <layer name="saveContext" x="0" y="0">
+        <frame name="saveContext"></frame>
+      </layer>
+      <layer name="restoreContext" x="0" y="0">
+        <frame name="restoreContext"></frame>
+      </layer>
+      <layer name="introAnimation" x="0" y="0">
+        <frame name="introAnimation"></frame>
+      </layer>
+      <layer name="fadingOut" x="0" y="0">
+        <frame name="fadingOut"></frame>
+      </layer>
+      <layer name="text" x="0" y="0">
+        <frame name="text"></frame>
+      </layer>
+    </layers>
+    <frames>
+      <frame name="inactive" code="context.drawImage(vars.$img,x,1080+y,vars.$w,vars.$h,x,y,vars.$w,vars.$h);" t="300"></frame>
+      <frame name="text" code="if(vars.$text){context.fillStyle='white';context.textAlign='center';context.font='50px Segoe UI';context.fillText(vars.$text,x+vars.$w/2,y+vars.$h/2);}"></frame>
+      <frame name="icon" code="if(vars.$iconImg){ context.drawImage(vars.$iconImg,x,y);}" t="300"></frame>
+      <frame name="active" code="if(vars.$dirtyGrad===true){vars.$dirtyGrad=false; vars.$grad=context.createRadialGradient(vars.$mouseX,vars.$mouseY,10,vars.$mouseX,vars.$mouseY,200);       vars.$grad.addColorStop(0,'rgba(255,255,255,0.4)');       vars.$grad.addColorStop(1,'rgba(255,255,255,0.15)');       } context.fillStyle=vars.$grad;context.fillRect(x,y,vars.$w,vars.$h);" t="300"></frame>
+      <frame name="clicked" code="var fade = -t/1000; if(fade >= -0.3){ vars.$grad=context.createRadialGradient(vars.$mouseX,vars.$mouseY,10,vars.$mouseX,vars.$mouseY,200);       vars.$grad.addColorStop(0,'rgba(255,255,255,'+(0.7+fade)+')');       vars.$grad.addColorStop(1,'rgba(255,255,255,'+(0.45+fade)+')');       } context.fillStyle=vars.$grad;context.fillRect(x,y,vars.$w,vars.$h);" t="350"></frame>
+      <frame name="saveContext" code="context.save();" t="350"></frame>
+      <frame name="restoreContext" code="context.restore();" t="350"></frame>
+      <frame name="introAnimation" code="var delay = vars.$delay || 0; var fade = (t-delay) > 500 ? 1 : ( (t-delay) < 0 ? 0 : (t-delay)/500);context.globalAlpha=fade;context.translate(0,50-fade*50);" t="0">
+      </frame>
+      <frame name="fadingOut" code="var delay = vars.$delay || 0; var fade = (t-delay) > 500 ? 0 : ( (t-delay) < 0 ? 1 : 1-(t-delay)/500);context.globalAlpha=fade;context.translate(x+vars.$w/2,y+vars.$h/2);context.scale(fade,fade);context.translate(-x-vars.$w/2,-y-vars.$h/2);" t="0">
+      </frame>
+    </frames>
+  </spritesheet>
+  <spritesheet name="fluentReveal">
+    <states>
+      <state name="fluentReveal">
+        <layer name="borders"></layer>
+      </state>
+    </states>
+    <layers>
+      <layer name="borders" x="0" y="0">
+        <frame name="borders"></frame>
+      </layer>
+    </layers>
+    <frames>
+      <frame name="borders" code="context.save();context.beginPath();      vars.$borders.forEach(function(b){      context.rect(b.x,b.y,b.w,4);      context.rect(b.x,b.y+b.h-4,b.w,4);      context.rect(b.x,b.y,4,b.h);      context.rect(b.x+b.w-4,b.y,4,b.h);       });       context.clip(); if(vars.$dirtyGrad===true){ vars.$dirtyGrad=false;vars.$grad=context.createRadialGradient(vars.$mouseX,vars.$mouseY,10,vars.$mouseX,vars.$mouseY,200);       vars.$grad.addColorStop(0,'rgba(255,255,255,0.6)');       vars.$grad.addColorStop(1,'rgba(255,255,255,0)');       } context.fillStyle=vars.$grad;      context.fillRect(0,0,1920,1080);context.restore();" t="0"></frame>
+    </frames>
+  </spritesheet>
+  <spritesheet name="bsod" src="images/menu/qr.png">
+    <states>
+      <state name="displayText">
+        <layer name="background"></layer>
+        <layer name="qr"></layer>
+        <layer name="text1"></layer>
+        <layer name="text2"></layer>
+        <layer name="emoji"></layer>
+        <layer name="progress"></layer>
+      </state>
+    </states>
+    <layers>
+      <layer name="background" x="0" y="0">
+        <frame name="background"></frame>
+      </layer>
+      <layer name="text1" x="300" y="420">
+        <frame name="text1"></frame>
+      </layer>
+      <layer name="text2" x="620" y="655">
+        <frame name="text2"></frame>
+      </layer>
+      <layer name="emoji" x="300" y="300">
+        <frame name="emoji"></frame>
+      </layer>
+      <layer name="qr" x="300" y="620">
+        <frame name="qr"></frame>
+      </layer>
+      <layer name="progress" x="300" y="590">
+        <frame name="progress"></frame>
+      </layer>
+    </layers>
+    <frames>
+      <frame name="background" code="context.fillStyle=vars.$color;context.fillRect(0,0,1920,1080);"></frame>
+      <frame name="qr" x="0" y="0" w="300" h="300" t="200"></frame>
+      <frame name="emoji" code="context.fillStyle='white';context.textAlign='left';context.font='300px Segoe UI';context.fillText(vars.$emoji,x,y);"></frame>
+      <frame name="progress" code="context.fillStyle='white';context.textAlign='left';context.font='40px Segoe UI';context.fillText((t
+        <5000?Math.floor(t/50):100)+'% complete',x,y);">
+        </frame>
+        <frame name="text1" code="context.fillStyle='white';context.textAlign='left';context.font='40px Segoe UI';vars.$text1.split(';').forEach(function(t,i){context.fillText(t,x,y+i*50);})"></frame>
+        <frame name="text2" code="context.fillStyle='white';context.textAlign='left';context.font='35px Segoe UI';vars.$text2.split(';').forEach(function(t,i){context.fillText(t,x,y+i*45);})"></frame>
+      </frames>
+    </spritesheet>
+  </spritesheets>

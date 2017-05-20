@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<levels>
+  <level id="authentication">
+    <object name="socketioClient" type="socketioClient" x="0" y="0" z="0"></object>
+    <object name="clientAuth" type="clientAuth" x="0" y="0" z="0" vars='{"nextLevel":"mainMenu"}'></object>
+    <object name="minimalMessage" type="minimalMessage" x="0" y="0" z="0" vars='{"$text":"Logging you in"}'></object>
+  </level>
+  <level id="mainMenu">
+    <object name="blissBackground" type="blissBackground" x="0" y="0" z="0"></object>
+    <object name="fluentReveal" type="fluentReveal" x="0" y="0" z="100"></object>
+    <object name="mainPane" type="acrylicBox" x="150" y="230" z="10" vars='{"$w":900,"$h":620,"src":"/images/menu/bliss.png","iconSrc":"/images/menu/logo.png", "$delay":250}'></object>
+    <object name="newGame" type="acrylicButton" x="1150" y="230" z="10" vars='{"$w":300,"$h":300,"src":"/images/menu/bliss.png","iconSrc":"/images/menu/icons/newgame.png","trigger":"newgame","$delay":500}'></object>
+    <object name="joinGame" type="acrylicButton" x="1470" y="230" z="10" vars='{"$w":300,"$h":300,"src":"/images/menu/bliss.png","iconSrc":"/images/menu/icons/join.png","trigger":"join","$delay":750}'></object>
+    <object name="profile" type="acrylicButton" x="1150" y="550" z="10" vars='{"$w":300,"$h":300,"src":"/images/menu/bliss.png","iconSrc":"/images/menu/icons/profile.png","trigger":"profile","$delay":1000}'></object>
+    <object name="about" type="acrylicButton" x="1470" y="550" z="10" vars='{"$w":300,"$h":300,"src":"/images/menu/bliss.png","iconSrc":"/images/menu/icons/about.png","trigger":"about","$delay":1250}'></object>
+    <object name="mouse" type="mouse" x="0" y="0" z="0"></object>
+    <object name="mainMenuLogic" type="mainMenuLogic" x="0" y="0" z="0"></object>
+  </level>
+  <level id="newGame">
+    <object name="socketioClient" type="socketioClient" x="0" y="0" z="0"></object>
+    <object name="blissBackground" type="blissBackground" x="0" y="0" z="0"></object>
+    <object name="fluentReveal" type="fluentReveal" x="0" y="0" z="100"></object>
+    <object name="messagePane" type="acrylicBox" x="360" y="230" z="10" vars='{"$w":1200,"$h":400,"src":"/images/menu/bliss.png","$text":"Waiting for another player to connect...", "$delay":250}'></object>
+    <object name="mouse" type="mouse" x="0" y="0" z="0"></object>
+    <object name="newGameLogic" type="newGameLogic" x="0" y="0" z="0"></object>
+  </level>
+  <level id="joinGame">
+    <object name="socketioClient" type="socketioClient" x="0" y="0" z="0"></object>
+    <object name="blissBackground" type="blissBackground" x="0" y="0" z="0"></object>
+    <object name="fluentReveal" type="fluentReveal" x="0" y="0" z="100"></object>
+    <object name="messagePane" type="acrylicBox" x="360" y="230" z="10" vars='{"$w":1200,"$h":400,"src":"/images/menu/bliss.png","$text":"Looking for existing games...", "$delay":250}'></object>
+    <object name="mouse" type="mouse" x="0" y="0" z="0"></object>
+    <object name="joinGameLogic" type="joinGameLogic" x="0" y="0" z="0"></object>
+  </level>
+  <level id="mainLevel">
+    <object name="socketioClient" type="socketioClient" x="0" y="0" z="0"></object>
+    <object name="localPlayer" type="localPlayer" x="0" y="0" z="0"></object>
+    <object name="remotePlayer" type="remotePlayer" x="0" y="0" z="0"></object>
+    <object name="background" type="background" x="0" y="0" z="0"></object>
+    <object name="battleManager" type="battleManager" x="0" y="0" z="200"></object>
+    <object name="slot" type="slot" x="435" y="280" z="1" vars='{"player":"remote","id":0}'></object>
+    <object name="slot" type="slot" x="785" y="280" z="1" vars='{"player":"remote","id":1}'></object>
+    <object name="slot" type="slot" x="1135" y="280" z="1" vars='{"player":"remote","id":2}'></object>
+    <object name="slot" type="slot" x="1485" y="280" z="1" vars='{"player":"remote","id":3}'></object>
+    <object name="slot" type="slot" x="435" y="800" z="1" vars='{"player":"local","id":4}'></object>
+    <object name="slot" type="slot" x="785" y="800" z="1" vars='{"player":"local","id":5}'></object>
+    <object name="slot" type="slot" x="1135" y="800" z="1" vars='{"player":"local","id":6}'></object>
+    <object name="slot" type="slot" x="1485" y="800" z="1" vars='{"player":"local","id":7}'></object>
+    <object name="dealer" type="dealer" x="0" y="0" z="0"></object>
+    <object name="mouse" type="mouse" x="0" y="0" z="0"></object>
+    <object name="clickHandler" type="clickHandler" x="0" y="0" z="0"></object>
+    <object name="versusText" type="versusText" x="700" y="70" z="1000"></object>
+    <object name="skillButton1" type="skillButton" x="960" y="270" z="1000" vars='{"$text":"Productivity"}'></object>
+    <object name="skillButton2" type="skillButton" x="960" y="410" z="1000" vars='{"$text":"Gamerscore"}'></object>
+    <object name="skillButton3" type="skillButton" x="960" y="550" z="1000" vars='{"$text":"Community"}'></object>
+    <object name="skillButton4" type="skillButton" x="960" y="690" z="1000" vars='{"$text":"Sass"}'></object>
+    <object name="skillButton5" type="skillButton" x="960" y="830" z="1000" vars='{"$text":"Events"}'></object>
+    <object name="playerBattleProfile" type="battleProfile" x="100" y="600" z="10"></object>
+    <object name="opponentBattleProfile" type="battleProfile" x="100" y="480" z="10"></object>
+    <object name="networkGameLogic" type="networkGameLogic" x="0" y="0" z="0"></object>
+  </level>
+  <level id="gameOver">
+    <object name="bsod" type="bsod" x="0" y="0" z="0"></object>
+    <object name="mouse" type="mouse" x="0" y="0" z="0"></object>
+  </level>
+  <level id="server">
+    <object name="socketioServer" type="socketioServer" x="0" y="0" z="0"></object>
+    <object name="serverAuth" type="serverAuth" x="0" y="0" z="0"></object>
+    <object name="serverLog" type="serverLog" x="0" y="0" z="0"></object>
+    <object name="gamesQueue" type="gamesQueue" x="0" y="0" z="0"></object>
+    <object name="gamesManager" type="gamesManager" x="0" y="0" z="0"></object>
+  </level>
+</levels>
