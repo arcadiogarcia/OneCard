@@ -167,6 +167,7 @@ CLOCKWORKRT.components.register([
             },
             {
                 name: "about", code: function () {
+                    window.open("https://github.com/arcadiogarcia/OneCard", "_blank");
                     this.engine.find("mainPane").var.$iconImg.src = this.engine.getRenderingLibrary().getWorkingFolder() + "/images/menu/about.png";
                 }
             }
