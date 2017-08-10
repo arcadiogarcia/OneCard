@@ -7,8 +7,9 @@ CLOCKWORKRT.components.register([
                 name: "#setup", code: function () {
                     if (typeof window !== 'undefined') { //Skip this lines on the headless engine (the server)
                         this.var.$face = new Image();
-                        this.var.$face.src = this.engine.getAnimationEngine().getWorkingFolder() + this.var.$faceSrc;
+                        this.var.$face.src = this.engine.getRenderingLibrary().getWorkingFolder() + this.var.$faceSrc;
                     }
+                    this.var.$skill = this.var.$skill.join(", ");
                     this.var.moving = false;
                     this.var.selected = false;
                     this.do.displayState("");
@@ -28,6 +29,7 @@ CLOCKWORKRT.components.register([
                 name: "tryMoveSelected", code: function (event) {
                     if (this.var.selected === true) {
                         if (event.position === "slot" && this.var.position === "hand") {
+                            console.log("Move card to "+event.target)
                             this.engine.do.playerAction({
                                 action: "moveCard",
                                 position: event.position,
@@ -59,6 +61,7 @@ CLOCKWORKRT.components.register([
                         this.var.selected = false;
                         var that = this;
                         var moveCallback = event.callback;
+                        console.log("miving to x position "+(event.position === "slot" ? 435 + (event.target - 4) * 350 : 435 + (event.target) * 350));
                         this.do.moveTo({
                             x: event.position === "slot" ? 435 + (event.target - 4) * 350 : 435 + (event.target) * 350, y: event.position === "slot" ? 800 : 280, callback: function () {
                                 that.var.$z = 10;
@@ -105,7 +108,7 @@ CLOCKWORKRT.components.register([
                 }
             },
             {
-                name: "click", code: function (data) {
+                name: "clicked", code: function (data) {
                     this.engine.do.addClickCandidate(this);
                     if (this.var.position === "opponentSlot") {
                         this.engine.do.battleSelected(this);
@@ -203,6 +206,13 @@ CLOCKWORKRT.components.register([
         ]
     },
     {
+        name: "eventCard",
+        inherits: "card",
+        vars: [
+            { name: "cardType", value: "event" }
+        ]
+    },
+    {
         name: "background",
         sprite: "background"
     },
@@ -218,7 +228,7 @@ CLOCKWORKRT.components.register([
                 }
             },
             {
-                name: "click", code: function (data) {
+                name: "clicked", code: function (data) {
                     var that = this;
                     this.engine.do.tryMoveSelected({
                         target: this.var.id, position: "slot"
@@ -298,8 +308,8 @@ CLOCKWORKRT.components.register([
                         target: event.target,
                         callback: this.engine.do.startTurn
                     });
+                    card.var.$state = "hidden"; //Yes, it is only hidden in the visual layer!
                 }
-
             }
         ]
     },
@@ -340,7 +350,7 @@ CLOCKWORKRT.components.register([
                     if (this.var.clicked.length > 0) {
                         this.var.clicked.reduce(function (a, b) {
                             return a.var.z > b.var.z ? a : b;
-                        }).do.click();
+                        }).do.clicked();
                         this.var.clicked = [];
                     }
                 }
@@ -369,10 +379,15 @@ CLOCKWORKRT.components.register([
                     this.var.endBattleCallback = battle.callback;
                     this.var.localPlayerAttacks = battle.localPlayerAttacks;
                     this.engine.do.showBattleUI({ localPlayerAttacks: battle.localPlayerAttacks });
+                    var that=this;
+                    setTimeout(function(){
+                        that.engine.do.selectedBattleSkill(that.engine.var.skill);
+                    },1000);
                 }
             },
             {
                 name: "selectedBattleSkill", code: function (text) {
+                    console.log("selected skill "+text);
                     var battleManager = this;
                     var attacker = this.var.attacker;
                     var defender = this.var.defender;
@@ -422,6 +437,7 @@ CLOCKWORKRT.components.register([
             }
         ]
     },
+    //Skill button removed in this version of the game
     {
         name: "skillButton",
         sprite: "skillButton",
@@ -445,7 +461,7 @@ CLOCKWORKRT.components.register([
                 }
             },
             {
-                name: "click", code: function (data) {
+                name: "clicked", code: function (data) {
                     var that = this;
                     this.var.$state = "clicked";
                     this.engine.do.hideBattleButtons(this.var.$text);
@@ -551,11 +567,14 @@ CLOCKWORKRT.components.register([
                             break;
                         case "win":
                             this.engine.var.gameOverReason = "win";
-                            this.engine.loadLevelByID("gameOver");
+                            this.engine.loadLevel("gameOver");
                             break;
                         case "lose":
                             this.engine.var.gameOverReason = "lose";
-                            this.engine.loadLevelByID("gameOver");
+                            this.engine.loadLevel("gameOver");
+                            break;
+                        case "setActiveSkill":
+                            this.engine.do.setActiveSkill(data.skill);
                             break;
                     }
                 }
@@ -597,6 +616,23 @@ CLOCKWORKRT.components.register([
                             });
                             break;
                     }
+                }
+            }
+        ]
+    },
+    {
+        name: "activeSkill",
+        sprite: "activeSkill",
+        events: [
+            {
+                name: "#setup", code: function () {
+                    this.var.$skill = "Loading";
+                }
+            },
+            {
+                name: "setActiveSkill", code: function (skill) {
+                    this.var.$skill = skill;
+                    this.engine.var.skill = skill;
                 }
             }
         ]

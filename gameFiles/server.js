@@ -54,25 +54,39 @@ CLOCKWORKRT.components.register([
             {
                 name: "#setup", code: function (id) {
                     this.var.playerGame = [];
+                    this.var.skills = ["Productivity", "Gamerscore", "Community", "Hype", "Events"];
                 }
             },
             {
                 name: "createNewGame", code: function (event) {
+                    function shuffle(array) {  //From http://stackoverflow.com/questions/962802/is-it-correct-to-use-javascript-array-sort-method-for-shuffling
+                        var tmp, current, top = array.length;
+                        if (top) while (--top) {
+                            current = Math.floor(Math.random() * (top + 1));
+                            tmp = array[current];
+                            array[current] = array[top];
+                            array[top] = tmp;
+                        }
+                        return array;
+                    }
+                    var player1deck = shuffle(this.engine.var.fullDeck.map(function (x) { return x; })).slice(0, 10);
+                    var player2deck = shuffle(this.engine.var.fullDeck.map(function (x) { return x; })).slice(0, 10);
                     var newGame = {
                         player1: event.player1,
                         player2: event.player2,
                         board: [],
                         player1hand: [],
                         player2hand: [],
-                        player1deck: ["ArcadioGarcia", "AaronGreenberg", "ArcadioGarcia", "AaronGreenberg"],
-                        player2deck: ["ArcadioGarcia", "AaronGreenberg", "ArcadioGarcia", "AaronGreenberg"],
+                        player1deck: player1deck,
+                        player2deck: player2deck,
                         player1started: false,
                         player2started: false,
                         gameStarted: false,
                         cardid: 0,
                         attacker: -1,
                         defender: -1,
-                        attackingPlayer: -1
+                        attackingPlayer: -1,
+                        activeSkill: this.var.skills[Math.floor(this.var.skills.length * Math.random())]
                     };
                     this.var.playerGame[event.player1] = newGame;
                     this.var.playerGame[event.player2] = newGame;
@@ -113,6 +127,8 @@ CLOCKWORKRT.components.register([
                         //Every player draws 3 card at the start
                         this.engine.do.socketSend({ id: game.player1, data: { action: "setPlayer1" } });
                         this.engine.do.socketSend({ id: game.player2, data: { action: "setPlayer2" } });
+                        this.engine.do.socketSend({ id: game.player1, data: { action: "setActiveSkill", skill: game.activeSkill } });
+                        this.engine.do.socketSend({ id: game.player2, data: { action: "setActiveSkill", skill: game.activeSkill } });
                         this.do.tryGameAction({ action: "drawCard", game: game, player: "player1" });
                         this.do.tryGameAction({ action: "drawCard", game: game, player: "player1" });
                         this.do.tryGameAction({ action: "drawCard", game: game, player: "player1" });
@@ -177,7 +193,7 @@ CLOCKWORKRT.components.register([
                             break;
                         case "selectedBattleSkill":
                             var board = action.game.board;
-                            if (action.game.attacker !== -1 && action.game.defender !== -1 && action.game.attackingPlayer === action.player) {
+                            if (action.game.attacker !== -1 && action.game.defender !== -1 && action.game.attackingPlayer === action.player && action.stat == action.game.activeSkill.toLowerCase()) {
                                 var attacker = this.engine.find("card" + action.game.attacker);
                                 var defender = this.engine.find("card" + action.game.defender);
                                 var won = attacker.var.$stats[action.stat] >= defender.var.$stats[action.stat];

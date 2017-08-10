@@ -1,5 +1,5 @@
 {
-    "name": "CardGame",
+    "name": "OneCard",
     "scope": "gameFiles",
     "components": [
         "components.js",
@@ -27,8 +27,8 @@
     "themeColor": "#4B5",
     "backgroundColor": "#000",
     "tileIcon": "tileIcon.png",
-    "enginefps": 60,
-    "animationfps": 60,
+    "enginefps": 30,
+    "animationfps": 30,
     "serverfps": 1,
     "serverLevel": "server"
 }

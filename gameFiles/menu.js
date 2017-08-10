@@ -19,10 +19,10 @@ CLOCKWORKRT.components.register([
                         that.engine.do.addRevealBorders({ x: that.var.$x, y: that.var.$y, w: that.var.$w, h: that.var.$h });
                     }, this.var.$delay + 500);
                     this.var.$img = new Image();
-                    this.var.$img.src = this.engine.getAnimationEngine().getWorkingFolder() + this.var.src;
+                    this.var.$img.src = this.engine.getRenderingLibrary().getWorkingFolder() + this.var.src;
                     if (this.var.iconSrc) {
                         this.var.$iconImg = new Image();
-                        this.var.$iconImg.src = this.engine.getAnimationEngine().getWorkingFolder() + this.var.iconSrc;
+                        this.var.$iconImg.src = this.engine.getRenderingLibrary().getWorkingFolder() + this.var.iconSrc;
                     }
                     this.setCollider("box", {
                         "x": 0, "y": 0, "w": this.var.$w, "h": this.var.$h
@@ -53,7 +53,7 @@ CLOCKWORKRT.components.register([
                         if (this.var.clicked === true) {
                             this.var.$state = "clicked";
                             var that = this;
-                            this.engine.getAnimationEngine().setEndedCallback(this.spriteholder, function () {
+                            this.engine.getRenderingLibrary().setEndedCallback(this.spriteholder, function () {
                                 that.var.clicked = false;
                                 that.var.$dirtyGrad = true;
                             });
@@ -135,7 +135,7 @@ CLOCKWORKRT.components.register([
         events: [
             {
                 name: "loadLevel", code: function (level) {
-                    this.engine.loadLevelByID(level);
+                    this.engine.loadLevel(level);
                 }
             },
             {
@@ -167,7 +167,7 @@ CLOCKWORKRT.components.register([
             },
             {
                 name: "about", code: function () {
-                    this.engine.find("mainPane").var.$iconImg.src = this.engine.getAnimationEngine().getWorkingFolder() + "/images/menu/about.png";
+                    this.engine.find("mainPane").var.$iconImg.src = this.engine.getRenderingLibrary().getWorkingFolder() + "/images/menu/about.png";
                 }
             }
         ]
@@ -186,7 +186,7 @@ CLOCKWORKRT.components.register([
                         if (data.result === true) {
                             this.engine.var.playerName = data.playerName;
                             this.engine.var.opponentName = data.opponentName;
-                            this.engine.loadLevelByID("mainLevel");
+                            this.engine.loadLevel("mainLevel");
                         } else {
                             this.engine.find("messagePane").var.$text = "Couldn't find games to join, please create one.";
                             var that = this;
@@ -199,7 +199,7 @@ CLOCKWORKRT.components.register([
             },
             {
                 name: "goBack", code: function (data) {
-                    this.engine.loadLevelByID("mainMenu");
+                    this.engine.loadLevel("mainMenu");
                 }
             }
         ]
@@ -218,7 +218,7 @@ CLOCKWORKRT.components.register([
                         if (data.result === true) {
                             this.engine.var.playerName = data.playerName;
                             this.engine.var.opponentName = data.opponentName;
-                            this.engine.loadLevelByID("mainLevel");
+                            this.engine.loadLevel("mainLevel");
                         } else {
                             this.engine.find("messagePane").var.$text = "Finding an opponent! Queue position:" + data.queuePosition;
                         }
@@ -227,7 +227,7 @@ CLOCKWORKRT.components.register([
             },
             {
                 name: "goBack", code: function (data) {
-                    this.engine.loadLevelByID("mainLevel");
+                    this.engine.loadLevel("mainLevel");
                 }
             }
         ]
@@ -273,7 +273,7 @@ CLOCKWORKRT.components.register([
             {
                 name: "#collide", code: function (data) {
                     if (data.shape2tag === "click" && this.var.ready === true) {
-                        this.engine.loadLevelByID("mainMenu");
+                        this.engine.loadLevel("mainMenu");
                     }
                 }
             },

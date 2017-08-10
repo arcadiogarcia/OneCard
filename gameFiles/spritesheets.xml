@@ -7,7 +7,7 @@
         <layer name="productivity"></layer>
         <layer name="gamerscore"></layer>
         <layer name="community"></layer>
-        <layer name="sass"></layer>
+        <layer name="hype"></layer>
         <layer name="events"></layer>
         <layer name="face"></layer>
         <layer name="character"></layer>
@@ -19,7 +19,7 @@
         <layer name="productivity"></layer>
         <layer name="gamerscore"></layer>
         <layer name="community"></layer>
-        <layer name="sass"></layer>
+        <layer name="hype"></layer>
         <layer name="events"></layer>
         <layer name="face"></layer>
         <layer name="character"></layer>
@@ -33,7 +33,7 @@
         <layer name="productivity"></layer>
         <layer name="gamerscore"></layer>
         <layer name="community"></layer>
-        <layer name="sass"></layer>
+        <layer name="hype"></layer>
         <layer name="events"></layer>
         <layer name="face"></layer>
         <layer name="character"></layer>
@@ -48,7 +48,7 @@
         <layer name="productivity"></layer>
         <layer name="gamerscore"></layer>
         <layer name="community"></layer>
-        <layer name="sass"></layer>
+        <layer name="hype"></layer>
         <layer name="events"></layer>
         <layer name="face"></layer>
         <layer name="character"></layer>
@@ -63,7 +63,7 @@
         <layer name="productivity"></layer>
         <layer name="gamerscore"></layer>
         <layer name="community"></layer>
-        <layer name="sass"></layer>
+        <layer name="hype"></layer>
         <layer name="events"></layer>
         <layer name="face"></layer>
         <layer name="character"></layer>
@@ -78,7 +78,7 @@
         <layer name="productivity"></layer>
         <layer name="gamerscore"></layer>
         <layer name="community"></layer>
-        <layer name="sass"></layer>
+        <layer name="hype"></layer>
         <layer name="events"></layer>
         <layer name="face"></layer>
         <layer name="character"></layer>
@@ -86,10 +86,22 @@
         <layer name="skill"></layer>
         <layer name="restoreContext"></layer>
       </state>
+      <state name="hidden">
+        <layer name="saveContext"></layer>
+        <layer name="scaleTable"></layer>
+        <layer name="hidden"></layer>
+        <layer name="restoreContext"></layer>
+      </state>
     </states>
     <layers>
       <layer name="character" x="-250" y="-400">
         <frame name="character"></frame>
+      </layer>
+      <layer name="event" x="-250" y="-400">
+        <frame name="event"></frame>
+      </layer>
+      <layer name="hidden" x="-250" y="-400">
+        <frame name="hidden"></frame>
       </layer>
       <layer name="saveContext" x="0" y="0">
         <frame name="saveContext"></frame>
@@ -124,8 +136,8 @@
       <layer name="community" x="-250" y="-400">
         <frame name="community"></frame>
       </layer>
-      <layer name="sass" x="-250" y="-400">
-        <frame name="sass"></frame>
+      <layer name="hype" x="-250" y="-400">
+        <frame name="hype"></frame>
       </layer>
       <layer name="events" x="-250" y="-400">
         <frame name="events"></frame>
@@ -136,9 +148,17 @@
       <layer name="floatMovement" x="20" y="0">
         <frame name="floatMovement"></frame>
       </layer>
+      <layer name="eventName" x="0" y="0">
+        <frame name="eventName"></frame>
+      </layer>
+      <layer name="eventDescription" x="0" y="0">
+        <frame name="eventDescription"></frame>
+      </layer>
     </layers>
     <frames>
       <frame name="character" x="0" y="0" w="500" h="800" t="1000"></frame>
+      <frame name="event" x="500" y="0" w="500" h="800" t="1000"></frame>
+      <frame name="hidden" x="1000" y="0" w="500" h="800" t="1000"></frame>
       <frame name="powerUp" x="500" y="0" w="500" h="800" t="1000"></frame>
       <frame name="back" x="1000" y="0" w="500" h="800" t="1000"></frame>
       <frame name="colors" x="1500" y="0" w="200" h="300" t="1000"></frame>
@@ -153,9 +173,11 @@
       <frame name="productivity" code="context.fillStyle='#CCC';context.fillRect(x+275+vars.$stats.productivity*44,y+440,(4-vars.$stats.productivity)*44,44);"></frame>
       <frame name="gamerscore" code="context.fillStyle='#CCC';context.fillRect(x+275+vars.$stats.gamerscore*44,y+491,(4-vars.$stats.gamerscore)*44,44);"></frame>
       <frame name="community" code="context.fillStyle='#CCC';context.fillRect(x+275+vars.$stats.community*44,y+545,(4-vars.$stats.community)*44,44);"></frame>
-      <frame name="sass" code="context.fillStyle='#CCC';context.fillRect(x+275+vars.$stats.sass*44,y+600,(4-vars.$stats.sass)*44,44);"></frame>
+      <frame name="hype" code="context.fillStyle='#CCC';context.fillRect(x+275+vars.$stats.hype*44,y+600,(4-vars.$stats.hype)*44,44);"></frame>
       <frame name="events" code="context.fillStyle='#CCC';context.fillRect(x+275+vars.$stats.events*44,y+659,(4-vars.$stats.events)*44,44);"></frame>
       <frame name="floatMovement" code="context.translate(-x,-y);context.translate(10*Math.sin(t/600),10*Math.cos(t/600));"></frame>
+      <frame name="eventName" code="context.fillStyle='#333';context.textAlign='center';context.font='40px Segoe UI';context.fillText(vars.$name,x,y);"></frame>
+      <frame name="eventDescription" code="context.fillStyle='#666';context.textAlign='center';context.font='30px Segoe UI';context.fillText(vars.$description,x,y);"></frame>
     </frames>
   </spritesheet>
   <spritesheet name="slot" src="images/Cards.png">
@@ -281,8 +303,8 @@
     </layers>
     <frames>
       <frame name="highlight" code="var xOff = 400;context.fillStyle='#DDD';context.beginPath();context.moveTo(x+490,y+10);context.lineTo(x+490,y+110);context.lineTo(x+xOff,y+110);context.lineTo(x+xOff+40,y+10);context.lineTo(x+490,y+10);context.fill();"></frame>
-      <frame name="highlightAnimated" code="var xOff = 400 - t;context.fillStyle='rgb('+      (t < 400 ? 221 -t/4 : 121) +','+      (t < 400 ? 221 -t/4 : 121)+','+      (t < 400 ? 221 -t/4 : 121)+')';context.beginPath();context.moveTo(x+490,y+10);context.lineTo(x+490,y+110);context.lineTo(xOff                                        
-        <10?x+10:x+xOff,y+110);context.lineTo(xOff+40                                                  
+      <frame name="highlightAnimated" code="var xOff = 400 - t;context.fillStyle='rgb('+      (t < 400 ? 221 -t/4 : 121) +','+      (t < 400 ? 221 -t/4 : 121)+','+      (t < 400 ? 221 -t/4 : 121)+')';context.beginPath();context.moveTo(x+490,y+10);context.lineTo(x+490,y+110);context.lineTo(xOff                                                                                        
+        <10?x+10:x+xOff,y+110);context.lineTo(xOff+40                                                                                                              
           <10?x+10:x+xOff+40,y+10);context.lineTo(x+490,y+10);context.fill();">
           </frame>
           <frame name="background" code="context.fillStyle='white';context.fillRect(x,y,500,120);"></frame>
@@ -326,6 +348,21 @@
           <frame name="pic" code="if(vars.$image){context.save();context.beginPath();context.arc(x+50,y+50,50,0,2*Math.PI);context.clip();context.drawImage(vars.$image,x,y,100,100);context.restore();}"></frame>
           <frame name="name" code="context.fillStyle='#000';context.font='20px Segoe UI';context.textAlign='left';context.fillText(vars.$name,x,y);"></frame>
           <frame name="text" code="context.fillStyle='#000';context.font='20px Segoe UI';context.textAlign='left';context.fillText(vars.$text,x,y);"></frame>
+        </frames>
+      </spritesheet>
+      <spritesheet name="activeSkill">
+        <states>
+          <state name="skill">
+            <layer name="skill"></layer>
+          </state>
+        </states>
+        <layers>
+          <layer name="skill" x="0" y="0">
+            <frame name="skill"></frame>
+          </layer>
+        </layers>
+        <frames>
+          <frame name="skill" code="context.fillStyle='#000';context.font='20px Segoe UI';context.textAlign='left';context.fillText(vars.$skill,x,y);"></frame>
         </frames>
       </spritesheet>
     </spritesheets>

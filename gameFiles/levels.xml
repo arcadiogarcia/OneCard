@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <levels>
-  <level id="authentication">
+   <level id="authentication">
     <object name="socketioClient" type="socketioClient" x="0" y="0" z="0"></object>
     <object name="clientAuth" type="clientAuth" x="0" y="0" z="0" vars='{"nextLevel":"mainMenu"}'></object>
     <object name="minimalMessage" type="minimalMessage" x="0" y="0" z="0" vars='{"$text":"Logging you in"}'></object>
-  </level>
+  </level> 
   <level id="mainMenu">
     <object name="blissBackground" type="blissBackground" x="0" y="0" z="0"></object>
     <object name="fluentReveal" type="fluentReveal" x="0" y="0" z="100"></object>
@@ -50,13 +50,14 @@
     <object name="mouse" type="mouse" x="0" y="0" z="0"></object>
     <object name="clickHandler" type="clickHandler" x="0" y="0" z="0"></object>
     <object name="versusText" type="versusText" x="700" y="70" z="1000"></object>
-    <object name="skillButton1" type="skillButton" x="960" y="270" z="1000" vars='{"$text":"Productivity"}'></object>
+    <!-- <object name="skillButton1" type="skillButton" x="960" y="270" z="1000" vars='{"$text":"Productivity"}'></object>
     <object name="skillButton2" type="skillButton" x="960" y="410" z="1000" vars='{"$text":"Gamerscore"}'></object>
     <object name="skillButton3" type="skillButton" x="960" y="550" z="1000" vars='{"$text":"Community"}'></object>
-    <object name="skillButton4" type="skillButton" x="960" y="690" z="1000" vars='{"$text":"Sass"}'></object>
-    <object name="skillButton5" type="skillButton" x="960" y="830" z="1000" vars='{"$text":"Events"}'></object>
+    <object name="skillButton4" type="skillButton" x="960" y="690" z="1000" vars='{"$text":"Hype"}'></object>
+    <object name="skillButton5" type="skillButton" x="960" y="830" z="1000" vars='{"$text":"Events"}'></object> -->
     <object name="playerBattleProfile" type="battleProfile" x="100" y="600" z="10"></object>
     <object name="opponentBattleProfile" type="battleProfile" x="100" y="480" z="10"></object>
+    <object name="activeSkill" type="activeSkill" x="1700" y="500" z="10"></object>
     <object name="networkGameLogic" type="networkGameLogic" x="0" y="0" z="0"></object>
   </level>
   <level id="gameOver">
@@ -67,6 +68,7 @@
     <object name="socketioServer" type="socketioServer" x="0" y="0" z="0"></object>
     <object name="serverAuth" type="serverAuth" x="0" y="0" z="0"></object>
     <object name="serverLog" type="serverLog" x="0" y="0" z="0"></object>
+    <object name="deck" type="deck" x="0" y="0" z="0"></object>
     <object name="gamesQueue" type="gamesQueue" x="0" y="0" z="0"></object>
     <object name="gamesManager" type="gamesManager" x="0" y="0" z="0"></object>
   </level>
