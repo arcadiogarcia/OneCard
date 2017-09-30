@@ -29,7 +29,7 @@ CLOCKWORKRT.components.register([
                 name: "tryMoveSelected", code: function (event) {
                     if (this.var.selected === true) {
                         if (event.position === "slot" && this.var.position === "hand") {
-                            console.log("Move card to "+event.target)
+                            console.log("Move card to " + event.target)
                             this.engine.do.playerAction({
                                 action: "moveCard",
                                 position: event.position,
@@ -61,7 +61,7 @@ CLOCKWORKRT.components.register([
                         this.var.selected = false;
                         var that = this;
                         var moveCallback = event.callback;
-                        console.log("miving to x position "+(event.position === "slot" ? 435 + (event.target - 4) * 350 : 435 + (event.target) * 350));
+                        console.log("miving to x position " + (event.position === "slot" ? 435 + (event.target - 4) * 350 : 435 + (event.target) * 350));
                         this.do.moveTo({
                             x: event.position === "slot" ? 435 + (event.target - 4) * 350 : 435 + (event.target) * 350, y: event.position === "slot" ? 800 : 280, callback: function () {
                                 that.var.$z = 10;
@@ -175,7 +175,7 @@ CLOCKWORKRT.components.register([
             },
             {
                 name: "battleSelected", code: function (card) {
-                    if (this.var.selected === true) {
+                    if (this.var.selected === true && this.var.position === "slot") {
                         this.do.unselect();
                         this.engine.do.playerAction({ action: "startBattle", attacker: this, defender: card, localPlayerAttacks: true });
                     }
@@ -379,15 +379,14 @@ CLOCKWORKRT.components.register([
                     this.var.endBattleCallback = battle.callback;
                     this.var.localPlayerAttacks = battle.localPlayerAttacks;
                     this.engine.do.showBattleUI({ localPlayerAttacks: battle.localPlayerAttacks });
-                    var that=this;
-                    setTimeout(function(){
+                    var that = this;
+                    setTimeout(function () {
                         that.engine.do.selectedBattleSkill(that.engine.var.skill);
-                    },1000);
+                    }, 1000);
                 }
             },
             {
                 name: "selectedBattleSkill", code: function (text) {
-                    console.log("selected skill "+text);
                     var battleManager = this;
                     var attacker = this.var.attacker;
                     var defender = this.var.defender;
@@ -411,15 +410,47 @@ CLOCKWORKRT.components.register([
                     if (won) {
                         defender.do.destroy();
                         attacker.do.goToDefaultPosition();
+                        this.do.particleExplosion();
                     } else {
                         attacker.do.destroy();
                         defender.do.goToDefaultPosition();
+                        this.do.particleExplosion();
                     }
                     this.var.$state = "empty";
-                    this.var.endBattleCallback();
+                    if (typeof this.var.endBattleCallback === "function") {
+                        this.var.endBattleCallback();
+                    }
+                }
+            },
+            {
+                name: "particleExplosion", code: function () {
+                    var particles = [];
+                    var engine = this.engine;
+                    for (var i = 0; i < 30; i++) {
+                        particles.push(
+                            engine.spawn("particle" + i, "particle", {
+                                $x: 960,
+                                $y: 540,
+                                $z: 500,
+                                $vx: Math.floor(5 * (Math.random() - 0.5)),
+                                $vy: Math.floor(5 * (Math.random() - 0.5)),
+                                $scale: Math.random() * 2,
+                                $color: Math.random() > 0.2 ? "white" : "#00ccff"
+                            })
+                        );
+                    }
+                    setTimeout(function () {
+                        particles.forEach(function (x) {
+                            engine.destroy(x);
+                        })
+                    }, 1000);
                 }
             }
         ]
+    },
+    {
+        name: "particle",
+        sprite: "particle"
     },
     {
         name: "versusText",
@@ -576,6 +607,9 @@ CLOCKWORKRT.components.register([
                         case "setActiveSkill":
                             this.engine.do.setActiveSkill(data.skill);
                             break;
+                        case "startTurn":
+                            this.engine.do.startTurn();
+                            break;
                     }
                 }
             },
@@ -615,6 +649,13 @@ CLOCKWORKRT.components.register([
                                 }
                             });
                             break;
+                        case "resetSkill":
+                            this.engine.do.socketSend({
+                                action: "gameAction", actionDetails: {
+                                    action: "resetSkill",
+                                }
+                            });
+                            break;
                     }
                 }
             }
@@ -631,10 +672,29 @@ CLOCKWORKRT.components.register([
             },
             {
                 name: "setActiveSkill", code: function (skill) {
+                    this.var.$state = "released";
+                    this.var.$state = "pressed";
                     this.var.$skill = skill;
                     this.engine.var.skill = skill;
                 }
+            },
+            {
+                name: "#collide", code: function (data) {
+                    if (data.shape2tag === "click") {
+                        this.engine.do.addClickCandidate(this);
+                    }
+                }
+            },
+            {
+                name: "clicked", code: function (data) {
+                    this.engine.do.playerAction({ action: "resetSkill" });
+                }
             }
-        ]
+        ],
+        collision: {
+            "box": [
+                { "#tag": "button", "x": -115, "y": -115, "w": 230, "h": 230 }
+            ]
+        }
     }
 ]);

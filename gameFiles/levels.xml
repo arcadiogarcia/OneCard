@@ -11,8 +11,8 @@
     <object name="mainPane" type="acrylicBox" x="150" y="230" z="10" vars='{"$w":900,"$h":620,"src":"/images/menu/bliss.png","iconSrc":"/images/menu/logo.png", "$delay":250}'></object>
     <object name="newGame" type="acrylicButton" x="1150" y="230" z="10" vars='{"$w":300,"$h":300,"src":"/images/menu/bliss.png","iconSrc":"/images/menu/icons/newgame.png","trigger":"newgame","$delay":500}'></object>
     <object name="joinGame" type="acrylicButton" x="1470" y="230" z="10" vars='{"$w":300,"$h":300,"src":"/images/menu/bliss.png","iconSrc":"/images/menu/icons/join.png","trigger":"join","$delay":750}'></object>
-    <object name="profile" type="acrylicButton" x="1150" y="550" z="10" vars='{"$w":300,"$h":300,"src":"/images/menu/bliss.png","iconSrc":"/images/menu/icons/profile.png","trigger":"profile","$delay":1000}'></object>
-    <object name="about" type="acrylicButton" x="1470" y="550" z="10" vars='{"$w":300,"$h":300,"src":"/images/menu/bliss.png","iconSrc":"/images/menu/icons/about.png","trigger":"about","$delay":1250}'></object>
+    <object name="profile" type="acrylicButton" x="1150" y="550" z="10" vars='{"$w":300,"$h":300,"src":"/images/menu/bliss.png","iconSrc":"/images/menu/icons/about.png","trigger":"about","$delay":1000}'></object>
+    <object name="about" type="acrylicButton" x="1470" y="550" z="10" vars='{"$w":300,"$h":300,"src":"/images/menu/bliss.png","iconSrc":"/images/menu/icons/more.png","trigger":"moreInfo","$delay":1250}'></object>
     <object name="mouse" type="mouse" x="0" y="0" z="0"></object>
     <object name="mainMenuLogic" type="mainMenuLogic" x="0" y="0" z="0"></object>
   </level>
@@ -57,7 +57,7 @@
     <object name="skillButton5" type="skillButton" x="960" y="830" z="1000" vars='{"$text":"Events"}'></object> -->
     <object name="playerBattleProfile" type="battleProfile" x="100" y="600" z="10"></object>
     <object name="opponentBattleProfile" type="battleProfile" x="100" y="480" z="10"></object>
-    <object name="activeSkill" type="activeSkill" x="1700" y="500" z="10"></object>
+    <object name="activeSkill" type="activeSkill" x="1730" y="600" z="10"></object>
     <object name="networkGameLogic" type="networkGameLogic" x="0" y="0" z="0"></object>
   </level>
   <level id="gameOver">

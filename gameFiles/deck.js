@@ -645,7 +645,7 @@ CLOCKWORKRT.components.register([
         name: "LarryHyrb",
         inherits: "characterCard",
         vars: [
-            { name: "$name", value: "LarryHyrb" },
+            { name: "$name", value: "Larry Hyrb" },
             { name: "$faceSrc", value: "/images/faces/LarryHyrb.png" },
             {
                 name: "$stats", value: {
@@ -681,7 +681,7 @@ CLOCKWORKRT.components.register([
         name: "MarkRussinovich",
         inherits: "characterCard",
         vars: [
-            { name: "$name", value: "MarkRussinovich" },
+            { name: "$name", value: "Mark Russinovich" },
             { name: "$faceSrc", value: "/images/faces/MarkRussinovich.png" },
             {
                 name: "$stats", value: {

@@ -27,7 +27,7 @@
     "themeColor": "#4B5",
     "backgroundColor": "#000",
     "tileIcon": "tileIcon.png",
-    "enginefps": 30,
+    "enginefps": 60,
     "animationfps": 30,
     "serverfps": 1,
     "serverLevel": "server"

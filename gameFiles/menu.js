@@ -157,18 +157,13 @@ CLOCKWORKRT.components.register([
                 }
             },
             {
-                name: "profile", code: function () {
-                    this.engine.do.fadeOut();
-                    var that = this;
-                    setTimeout(function () {
-                        that.do.loadLevel("mainMenu");
-                    }, 1750);
+                name: "about", code: function () {
+                    this.engine.find("mainPane").var.$iconImg.src = this.engine.getRenderingLibrary().getWorkingFolder() + "/images/menu/about.png";
                 }
             },
             {
-                name: "about", code: function () {
+                name: "moreInfo", code: function () {
                     window.open("https://github.com/arcadiogarcia/OneCard", "_blank");
-                    this.engine.find("mainPane").var.$iconImg.src = this.engine.getRenderingLibrary().getWorkingFolder() + "/images/menu/about.png";
                 }
             }
         ]

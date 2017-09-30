@@ -303,8 +303,8 @@
     </layers>
     <frames>
       <frame name="highlight" code="var xOff = 400;context.fillStyle='#DDD';context.beginPath();context.moveTo(x+490,y+10);context.lineTo(x+490,y+110);context.lineTo(x+xOff,y+110);context.lineTo(x+xOff+40,y+10);context.lineTo(x+490,y+10);context.fill();"></frame>
-      <frame name="highlightAnimated" code="var xOff = 400 - t;context.fillStyle='rgb('+      (t < 400 ? 221 -t/4 : 121) +','+      (t < 400 ? 221 -t/4 : 121)+','+      (t < 400 ? 221 -t/4 : 121)+')';context.beginPath();context.moveTo(x+490,y+10);context.lineTo(x+490,y+110);context.lineTo(xOff                                                                                        
-        <10?x+10:x+xOff,y+110);context.lineTo(xOff+40                                                                                                              
+      <frame name="highlightAnimated" code="var xOff = 400 - t;context.fillStyle='rgb('+      (t < 400 ? 221 -t/4 : 121) +','+      (t < 400 ? 221 -t/4 : 121)+','+      (t < 400 ? 221 -t/4 : 121)+')';context.beginPath();context.moveTo(x+490,y+10);context.lineTo(x+490,y+110);context.lineTo(xOff                                                                                                                        
+        <10?x+10:x+xOff,y+110);context.lineTo(xOff+40                                                                                                                                                      
           <10?x+10:x+xOff+40,y+10);context.lineTo(x+490,y+10);context.fill();">
           </frame>
           <frame name="background" code="context.fillStyle='white';context.fillRect(x,y,500,120);"></frame>
@@ -350,19 +350,48 @@
           <frame name="text" code="context.fillStyle='#000';context.font='20px Segoe UI';context.textAlign='left';context.fillText(vars.$text,x,y);"></frame>
         </frames>
       </spritesheet>
-      <spritesheet name="activeSkill">
+      <spritesheet name="activeSkill" src="images/button.png">
         <states>
-          <state name="skill">
+          <state name="pressed">
+            <layer name="pressed"></layer>
+            <layer name="skill"></layer>
+          </state>
+          <state name="released">
+            <layer name="released"></layer>
             <layer name="skill"></layer>
           </state>
         </states>
         <layers>
-          <layer name="skill" x="0" y="0">
+          <layer name="skill" x="0" y="-75">
             <frame name="skill"></frame>
+          </layer>
+          <layer name="pressed" x="-115" y="-115">
+            <frame name="pressed"></frame>
+            <frame name="released"></frame>
+          </layer>
+          <layer name="released" x="-115" y="-115">
+            <frame name="released"></frame>
           </layer>
         </layers>
         <frames>
-          <frame name="skill" code="context.fillStyle='#000';context.font='20px Segoe UI';context.textAlign='left';context.fillText(vars.$skill,x,y);"></frame>
+          <frame name="released" x="0" y="0" w="230" h="230" t="0"></frame>
+          <frame name="pressed" x="230" y="0" w="230" h="230" t="700"></frame>
+          <frame name="skill" code="context.fillStyle='#000';context.fillStyle='white';context.font='20px monospace';context.textAlign='center';context.fillText(vars.$skill,x,y);"></frame>
+        </frames>
+      </spritesheet>
+            <spritesheet name="particle">
+        <states>
+          <state name="particle">
+            <layer name="particle"></layer>
+          </state>
+        </states>
+        <layers>
+          <layer name="particle" x="0" y="0">
+            <frame name="particle"></frame>
+          </layer>
+        </layers>
+        <frames>
+          <frame name="particle" code="context.fillStyle=vars.$color;context.save();context.translate(x+vars.$vx*t,y+vars.$vy*t);context.scale(vars.$scale,vars.$scale);context.rotate(vars.$scale*t/100);context.beginPath();context.moveTo(75, 50);context.lineTo(100, 75);context.lineTo(100, 25);context.fill();context.restore();" t="2000"></frame>
         </frames>
       </spritesheet>
     </spritesheets>

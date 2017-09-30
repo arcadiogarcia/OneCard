@@ -86,7 +86,8 @@ CLOCKWORKRT.components.register([
                         attacker: -1,
                         defender: -1,
                         attackingPlayer: -1,
-                        activeSkill: this.var.skills[Math.floor(this.var.skills.length * Math.random())]
+                        activeSkill: this.var.skills[Math.floor(this.var.skills.length * Math.random())],
+                        turn: 0
                     };
                     this.var.playerGame[event.player1] = newGame;
                     this.var.playerGame[event.player2] = newGame;
@@ -163,6 +164,8 @@ CLOCKWORKRT.components.register([
                                 board[action.target] = card;
                                 this.engine.do.socketSend({ id: action.game[action.otherPlayer], data: { action: "moveCard", card: cardInfo, target: action.target, position: action.position } });
                                 this.do.tryGameAction({ action: "drawCard", game: action.game, player: action.player });
+                                action.game.turn = (action.game.turn + 1) % 2;
+                                this.engine.do.socketSend({ id: action.game["player" + (action.game.turn + 1)], data: { action: "startTurn" } });
                             } else {
                                 this.engine.do.socketSend({ id: action.game[action.player], data: { action: "cheatingDetected" } });
                                 this.engine.do.socketSend({ id: action.game[action.otherPlayer], data: { action: "cheatingDetected" } });
@@ -207,17 +210,31 @@ CLOCKWORKRT.components.register([
                                 this.engine.do.socketSend({ id: action.game[action.otherPlayer], data: { action: "selectedBattleSkill", stat: action.stat } });
                                 action.game.attacker = -1;
                                 action.game.defender = -1;
+                                action.game.turn = (action.game.turn + 1) % 2;
+                                this.engine.do.socketSend({ id: action.game["player" + (action.game.turn + 1)], data: { action: "startTurn" } });
                                 this.do.checkGameEnded(action.game);
                             } else {
                                 this.engine.do.socketSend({ id: action.game[action.player], data: { action: "cheatingDetected" } });
                                 this.engine.do.socketSend({ id: action.game[action.otherPlayer], data: { action: "cheatingDetected" } });
                             }
                             break;
+                        case "resetSkill":
+                            var newSkill;
+                            do {
+                                newSkill = this.var.skills[Math.floor(this.var.skills.length * Math.random())];
+                            } while (action.game.activeSkill == newSkill);
+                            action.game.activeSkill = newSkill;
+                            this.engine.do.socketSend({ id: action.game.player1, data: { action: "setActiveSkill", skill: action.game.activeSkill } });
+                            this.engine.do.socketSend({ id: action.game.player2, data: { action: "setActiveSkill", skill: action.game.activeSkill } });
+                            action.game.turn = (action.game.turn + 1) % 2;
+                            this.engine.do.socketSend({ id: action.game["player" + (action.game.turn + 1)], data: { action: "startTurn" } });
+                            break;
                     }
                 }
             },
             {
                 name: "checkGameEnded", code: function (game) {
+                    var thath=this;
                     var board = game.board;
                     var player2board = board.slice(0, 4).filter(function (c) { return c; });
                     var player1board = board.slice(4).filter(function (c) { return c; });
